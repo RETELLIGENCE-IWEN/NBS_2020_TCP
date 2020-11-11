@@ -14,6 +14,8 @@ HEADER_SIZE = 4
 
 ADDR = ('127.0.0.1', 50637)
 
+run = True
+
 
 def __recv(sock, as_str=False):
     header = recvall(sock, 4)
@@ -29,56 +31,58 @@ def __recv(sock, as_str=False):
 
 def handle_connection(sock, addr):
     tag = '%s:%s' % (threading.get_ident(), addr)
-    # [1] client -> server
-    data = __recv(sock, as_str=True)
-    print(data)
 
-    data = json.loads(data)
-    print('[%s] recv: %s' % (tag, data))
+    while run:
+        # [1] client -> server
+        data = __recv(sock, as_str=True)
+        print(data)
 
-    # [2] server -> client
-    ActionCommand = {
-        "ActionNumbers": 2,
-        "Actions":[
-            {
-                "Id": 0,                # Unit Id
-                "Engine": 5,            # Engine Speed (0=R, 1=N, 2, 3, 4, 5)
-                "Direction": 1,         # Steering Direction (-2, -1, 0, 1, 2)
-                "Radar": 1,             # Radar On/Off
-                "NavalGun": 1,          # Fire ?
-                "N_FireTargetId": 3,    # Target ID
-                "Missile": 0,           # Fire ?
-                "M_FireTargetId": 3,    # Target ID
-                "Torpedo": 0,           # Fire ?
-                "T_FireTargetId": 3     # Target ID
+        data = json.loads(data)
+        print('[%s] recv: %s' % (tag, data))
 
-            },
-            {
-                "Id": 3,
-                "Engine": 5,
-                "Direction": 0,
-                "Radar": 1,
-                "NavalGun": 0,
-                "N_FireTargetId": 0,
-                "Missile": 1,
-                "M_FireTargetId": 0,
-                "Torpedo": 0,
-                "T_FireTargetId": 0          
-            },
-        ]
-    }
+        # [2] server -> client
+        ActionCommand = {
+            "ActionNumbers": 2,
+            "Actions":[
+                {
+                    "Id": 0,                # Unit Id
+                    "Engine": 2,            # Engine Speed (0=R, 1=N, 2, 3, 4, 5)
+                    "Direction": 1,         # Steering Direction (1, 2, 3, 4, 5)
+                    "Radar": 1,             # Radar On/Off
+                    "NavalGun": 1,          # Fire ?
+                    "N_FireTargetId": 3,    # Target ID
+                    "Missile": 0,           # Fire ?
+                    "M_FireTargetId": 3,    # Target ID
+                    "Torpedo": 0,           # Fire ?
+                    "T_FireTargetId": 3     # Target ID
 
-    data = json.dumps(ActionCommand)
-    data = data.encode("utf-8")
-    print('[%s] send: %d bytes' % (tag, len(data)), data)
-    sock.sendall(int.to_bytes(len(data), HEADER_SIZE, byteorder=sys.byteorder))
-    time.sleep(1)
-    sock.sendall(data)
+                },
+                {
+                    "Id": 4,
+                    "Engine": 5,
+                    "Direction": 0,
+                    "Radar": 1,
+                    "NavalGun": 0,
+                    "N_FireTargetId": 0,
+                    "Missile": 1,
+                    "M_FireTargetId": 0,
+                    "Torpedo": 0,
+                    "T_FireTargetId": 0          
+                },
+            ]
+        }
 
-    # [4] Close
-    print("Socket Closing")
-    time.sleep(10)
-    sock.close()
+        data = json.dumps(ActionCommand)
+        data = data.encode("utf-8")
+        print('[%s] send: %d bytes' % (tag, len(data)), data)
+
+        sock.sendall(int.to_bytes(len(data), HEADER_SIZE, byteorder=sys.byteorder))
+
+        time.sleep(1)
+        sock.sendall(data)
+        print("One Time")
+    
+    print("Terminating connection")
 
 
 def main():
@@ -94,6 +98,10 @@ def main():
         client, addr = sock.accept()
         pool.submit(handle_connection, client, addr)    # future.result()
 
+    # [4] Close
+    print("Socket Closing")
+    time.sleep(10)
+    sock.close()
 
 if __name__ == "__main__":
     main()

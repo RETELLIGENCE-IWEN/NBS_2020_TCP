@@ -39,19 +39,35 @@ def handle_connection(sock, addr):
     # [2] server -> client
     ActionCommand = {
         "ActionNumbers": 2,
-        "Actions": [
+        "Actions":[
             {
-                "Id": 0,
-                "Engine": 5,
-                "Direction": 0
+                "Id": 0,                # Unit Id
+                "Engine": 5,            # Engine Speed (0=R, 1=N, 2, 3, 4, 5)
+                "Direction": 1,         # Steering Direction (-2, -1, 0, 1, 2)
+                "Radar": 1,             # Radar On/Off
+                "NavalGun": 1,          # Fire ?
+                "N_FireTargetId": 3,    # Target ID
+                "Missile": 0,           # Fire ?
+                "M_FireTargetId": 3,    # Target ID
+                "Torpedo": 0,           # Fire ?
+                "T_FireTargetId": 3     # Target ID
+
             },
             {
-                "Id": 4,
-                "Engine": 2,
-                "Direction": 2
+                "Id": 3,
+                "Engine": 5,
+                "Direction": 0,
+                "Radar": 1,
+                "NavalGun": 0,
+                "N_FireTargetId": 0,
+                "Missile": 1,
+                "M_FireTargetId": 0,
+                "Torpedo": 0,
+                "T_FireTargetId": 0          
             },
         ]
     }
+
     data = json.dumps(ActionCommand)
     data = data.encode("utf-8")
     print('[%s] send: %d bytes' % (tag, len(data)), data)

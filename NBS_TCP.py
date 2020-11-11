@@ -12,7 +12,7 @@ from util import recvall
 
 HEADER_SIZE = 4
 
-ADDR = ('0.0.0.0', 50637)
+ADDR = ('127.0.0.1', 50637)
 
 
 def __recv(sock, as_str=False):

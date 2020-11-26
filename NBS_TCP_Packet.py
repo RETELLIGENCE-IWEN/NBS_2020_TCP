@@ -42,7 +42,10 @@ StatusReport = {
         7130,        # Location X
         -56,         # Location Y
         False,       # Team (ally)
-        0            # Type (0=mid; 1=Heavy; 2=Sub; 4=Air)
+        True,        # Found Enemy
+        9774,        # Enemy Location X
+        0,           # Enemy Location Y
+        0            # Enemy ID
     ], 
     'Unit_0': [
         0, 

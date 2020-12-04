@@ -46,11 +46,11 @@ def handle_connection(sock, addr):
             "Actions":[
                 {
                     "Id": 0,                # Unit Id
-                    "Engine": 2,            # Engine Speed (0=R, 1=N, 2, 3, 4, 5)
-                    "Direction": 1,         # Steering Direction (1, 2, 3, 4, 5)
+                    "Engine": 5,            # Engine Speed (0=R, 1=N, 2, 3, 4, 5)
+                    "Direction": 3,         # Steering Direction (1, 2, 3, 4, 5)
                     "Radar": 1,             # Radar On/Off
                     "NavalGun": 1,          # Fire ?
-                    "N_FireTargetId": 3,    # Target ID
+                    "N_FireTargetId": 4,    # Target ID
                     "Missile": 0,           # Fire ?
                     "M_FireTargetId": 3,    # Target ID
                     "Torpedo": 0,           # Fire ?
@@ -60,9 +60,9 @@ def handle_connection(sock, addr):
                 {
                     "Id": 4,
                     "Engine": 5,
-                    "Direction": 0,
+                    "Direction": 2,
                     "Radar": 1,
-                    "NavalGun": 0,
+                    "NavalGun": 1,
                     "N_FireTargetId": 0,
                     "Missile": 1,
                     "M_FireTargetId": 0,

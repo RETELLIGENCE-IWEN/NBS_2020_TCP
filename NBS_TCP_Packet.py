@@ -38,24 +38,24 @@ ActionCommand = {
 StatusReport = {
     'Unit_4': [      # Unit Name
         4,           # ID
-        100,        # Current Health
+        100,         # Current Health
         7130,        # Location X
         -56,         # Location Y
         False,       # Team (ally)
         True,        # Found Enemy
         9774,        # Enemy Location X
-        0,           # Enemy Location Y
+        1234,        # Enemy Location Y
         0            # Enemy ID
     ], 
     'Unit_0': [
         0,           # ID
-        100,        # Current Health
+        100,         # Current Health
         -7130,       # Location X
         56,          # Location Y
-        False,       # Team (ally)
+        True,        # Team (ally)
         True,        # Found Enemy
         9774,        # Enemy Location X
-        0,           # Enemy Location Y
-        0            # Enemy ID
+        123,           # Enemy Location Y
+        4            # Enemy ID
     ]
 }
